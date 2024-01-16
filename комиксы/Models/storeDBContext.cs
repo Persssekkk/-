@@ -19,6 +19,7 @@ namespace комиксы.Models
         {
         }
 
+        public virtual DbSet<Cart> Cart { get; set; }
         public virtual DbSet<Clients> Clients { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<Products> Products { get; set; }
@@ -34,6 +35,29 @@ namespace комиксы.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Cart>(entity =>
+            {
+                entity.ToTable("cart");
+
+                entity.Property(e => e.CartId)
+                    .HasColumnName("cart_id")
+                    .UseIdentityAlwaysColumn();
+
+                entity.Property(e => e.ClientsId).HasColumnName("clients_id");
+
+                entity.Property(e => e.ProductsId).HasColumnName("products_id");
+
+                entity.HasOne(d => d.Clients)
+                    .WithMany(p => p.Cart)
+                    .HasForeignKey(d => d.ClientsId)
+                    .HasConstraintName("cart_clients_id_fkey");
+
+                entity.HasOne(d => d.Products)
+                    .WithMany(p => p.Cart)
+                    .HasForeignKey(d => d.ProductsId)
+                    .HasConstraintName("cart_products_id_fkey");
+            });
+
             modelBuilder.Entity<Clients>(entity =>
             {
                 entity.ToTable("clients");
@@ -56,9 +80,7 @@ namespace комиксы.Models
                     .HasColumnName("password")
                     .HasMaxLength(40);
 
-                entity.Property(e => e.Photo)
-                    .HasColumnName("photo")
-                    .HasColumnType("bit(1)");
+                entity.Property(e => e.Photo).HasColumnName("photo");
 
                 entity.HasOne(d => d.OrdersNavigation)
                     .WithMany(p => p.Clients)
@@ -120,19 +142,19 @@ namespace комиксы.Models
 
                 entity.Property(e => e.Amount).HasColumnName("amount");
 
-                entity.Property(e => e.Info)
-                    .HasColumnName("info")
-                    .HasMaxLength(299);
+                entity.Property(e => e.Info).HasColumnName("info");
 
                 entity.Property(e => e.Name)
                     .HasColumnName("name")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Photo)
-                    .HasColumnName("photo")
-                    .HasColumnType("bit(1)");
+                entity.Property(e => e.Photo).HasColumnName("photo");
 
                 entity.Property(e => e.Price).HasColumnName("price");
+
+                entity.Property(e => e.Type)
+                    .HasColumnName("type")
+                    .HasColumnType("character varying");
             });
 
             OnModelCreatingPartial(modelBuilder);

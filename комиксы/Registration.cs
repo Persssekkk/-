@@ -62,7 +62,7 @@ namespace комиксы
         private void label4_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Form9 form2 = new Form9();
+            Autorization form2 = new Autorization();
             form2.Show();
         }
     }

@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace комиксы
 {
-    public partial class заказ : Form
+    public partial class Заказы : Form
     {
-        public заказ()
+        public Заказы()
         {
             InitializeComponent();
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void Form5_Load(object sender, EventArgs e)
         {
 
         }

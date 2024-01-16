@@ -11,9 +11,9 @@ using комиксы.Models;
 
 namespace комиксы
 {
-    public partial class Form9 : Form
+    public partial class Autorization : Form
     {
-        public Form9()
+        public Autorization()
         {
             InitializeComponent();
         }
@@ -30,6 +30,13 @@ namespace комиксы
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if(textBox1.Text == "admin" && textBox2.Text == "admin")
+            {
+                AdminPanel adminPanel = new AdminPanel();
+                this.Hide();
+                adminPanel.Show();
+                return;
+            }
             string login = textBox1.Text;
             string password = textBox2.Text;
             if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
@@ -37,8 +44,8 @@ namespace комиксы
                 MessageBox.Show("Введите логин и пароль");
                 return;
             }
-            CurrentClients.ClientsID = IsValidLogin(login, password);
-            if (CurrentClients.ClientsID != 0)
+            Info.CurentUser = IsValidLogin(login, password);
+            if (Info.CurentUser != 0)
             {
                 Главная mainPage = new Главная();
                 mainPage.Show();
@@ -73,9 +80,5 @@ namespace комиксы
             form2.Show();
         }
 
-    }
-    public static class CurrentClients
-    {
-        public static long ClientsID { get; set; }
     }
 }

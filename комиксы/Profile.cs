@@ -44,5 +44,11 @@ namespace комиксы
             поддержка form2 = new поддержка();
             form2.Show();
         }
+
+        private void textBox2_MouseClick(object sender, MouseEventArgs e)
+        {
+            Заказы bruh = new Заказы();
+            bruh.Show();
+        }
     }
 }
